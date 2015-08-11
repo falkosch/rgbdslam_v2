@@ -51,6 +51,9 @@ void ui_connections(QObject* ui, GraphManager* graph_mgr, OpenNIListener* listen
   QObject::connect(ui, SIGNAL(saveTrajectory(QString)), graph_mgr, SLOT(saveTrajectory(QString)), ctype);
   QObject::connect(ui, SIGNAL(toggleMapping(bool)), graph_mgr, SLOT(toggleMapping(bool)), ctype);
   QObject::connect(ui, SIGNAL(saveG2OGraph(QString)), graph_mgr, SLOT(saveG2OGraph(QString)), ctype);
+
+  //added to send all clouds since the last request
+  QObject::connect(ui, SIGNAL(sendDiff()), graph_mgr, SLOT(sendDiff()), ctype);
 }
 
 ///Connect Signals and Slots only relevant for the graphical interface

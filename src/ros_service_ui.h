@@ -25,6 +25,7 @@
 #include "rgbdslam/rgbdslam_ros_ui_b.h"
 #include "rgbdslam/rgbdslam_ros_ui_f.h"
 #include "rgbdslam/rgbdslam_ros_ui_s.h"
+#include "rgbdslam/rgbdslam_ros_ui_c.h"
 
 class QAction;
 
@@ -44,7 +45,10 @@ public:
     bool services_f(rgbdslam::rgbdslam_ros_ui_f::Request  &req, rgbdslam::rgbdslam_ros_ui_f::Response &res);
     ///a service-client for commands with string arguments, e.g. a filename
     bool services_s(rgbdslam::rgbdslam_ros_ui_s::Request  &req, rgbdslam::rgbdslam_ros_ui_s::Response &res);
+/// a service clients for custom service calls (ask Tobias)
+    bool services_c(rgbdslam::rgbdslam_ros_ui_c::Request  &req, rgbdslam::rgbdslam_ros_ui_c::Response &res);
 Q_SIGNALS:
+	
     ///User selected to reset the graph
     void reset(); 
     ///User selected to start or resume processing
@@ -71,6 +75,9 @@ Q_SIGNALS:
     void saveTrajectory(QString);
     ///Trigger graph optimizer
     void optimizeGraph();
+
+    ///Send all clouds since last send diff
+    void sendDiff();
      
 public Q_SLOTS:
     void sendFinished();
@@ -86,6 +93,7 @@ private:
     ros::ServiceServer server_b;
     ros::ServiceServer server_f;
     ros::ServiceServer server_s;
+    ros::ServiceServer server_c;
 };
 
 #endif

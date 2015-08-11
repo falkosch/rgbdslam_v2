@@ -29,6 +29,7 @@ RosUi::RosUi(const char* service_namespace) : filename("quicksave.pcd"), record_
     server_b = n.advertiseService("ros_ui_b", &RosUi::services_b, this);
     server_f = n.advertiseService("ros_ui_f", &RosUi::services_f, this);
     server_s = n.advertiseService("ros_ui_s", &RosUi::services_s, this);
+    server_c = n.advertiseService("ros_ui_c", &RosUi::services_c, this);
     this->pause_on = ParameterServer::instance()->get<bool>("start_paused");
 }
 
@@ -72,6 +73,17 @@ bool RosUi::services(rgbdslam::rgbdslam_ros_ui::Request  &req,
         return false;
     }
     return true;
+}
+
+bool RosUi::services_c(rgbdslam::rgbdslam_ros_ui_c::Request  &req,
+                       rgbdslam::rgbdslam_ros_ui_c::Response &res )
+{
+	ROS_INFO_STREAM("Got custom service request. Command: " << req.command << ". Valeu: " << (req.value? "True": "False"));
+
+	if(req.command == "send_diff") {Q_EMIT sendDiff();}
+	else { return false;}
+
+	return true;
 }
 
 bool RosUi::services_b(rgbdslam::rgbdslam_ros_ui_b::Request  &req,

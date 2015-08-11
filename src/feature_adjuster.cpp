@@ -186,7 +186,7 @@ void VideoDynamicAdaptedFeatureDetector::detectImpl(const cv::Mat& _image, std::
             if(found_keypoints == 0 && !checked_for_non_zero_mask){
               checked_for_non_zero_mask = true;
               if(!hasNonZero(_mask)){
-                //std::cout << ("Breaking detection iterations, because of missing depth");
+                std::cout << ("Breaking detection iterations, because of missing depth");
                 break; //does not help to iterate if no points have depth
               }
             }

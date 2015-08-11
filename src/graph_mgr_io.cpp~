@@ -208,7 +208,7 @@ void GraphManager::sendDiffImpl()
     return;
   }
 
-  ROS_WARN("Sending out all clouds since %.2f", lastDiffTS_.toSec());
+  ROS_INFO("Sending out all clouds");
   batch_processing_runs_ = true;
   ros::Rate r(ParameterServer::instance()->get<double>("send_clouds_rate")); //slow down a bit, to allow for transmitting to and processing in other nodes
   double delay_seconds = ParameterServer::instance()->get<double>("send_clouds_delay");
@@ -242,7 +242,7 @@ void GraphManager::sendDiffImpl()
     Q_EMIT setGUIInfo(message.sprintf("Sending pointcloud and map transform (%i/%i) on topics %s and /tf", it->first, (int)graph_.size(), ParameterServer::instance()->get<std::string>("individual_cloud_out_topic").c_str()) );
     r.sleep();
   }
-  lastDiffTS_ = last;
+
   batch_processing_runs_ = false;
   Q_EMIT sendFinished();
 }

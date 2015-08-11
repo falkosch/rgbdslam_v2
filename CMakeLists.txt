@@ -47,7 +47,7 @@ project(rgbdslam)
 
 #add_definitions(-DROSCONSOLE_SEVERITY_INFO)
 
-add_service_files(DIRECTORY srv FILES rgbdslam_ros_ui.srv rgbdslam_ros_ui_b.srv rgbdslam_ros_ui_f.srv rgbdslam_ros_ui_s.srv) 
+add_service_files(DIRECTORY srv FILES rgbdslam_ros_ui.srv rgbdslam_ros_ui_b.srv rgbdslam_ros_ui_c.srv rgbdslam_ros_ui_f.srv rgbdslam_ros_ui_s.srv) 
 generate_messages()
 catkin_package(
 #  INCLUDE_DIRS include
@@ -225,7 +225,8 @@ add_dependencies(rgbdslam rgbdslam_gencpp)
 #SET(G2O_LIBS ${G2O_LIBRARIES} cholmod cxsparse)
 #SET(LIBS_LINK GL GLU -lgl2ps ${G2O_LIBS} ${QT_LIBRARIES} ${QT_QTOPENGL_LIBRARY} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS})
 #Use specific version of cxsparse, to avoid linker warning about possible conflicts between versions 2.2.3 (linked from g2o) and 3.1.0
-SET(LIBS_LINK GL GLU cholmod /usr/lib/x86_64-linux-gnu/libcxsparse.so.3.1.2 ${G2O_LIBRARIES} ${QT_LIBRARIES} ${QT_QTOPENGL_LIBRARY} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS})
+#SET(LIBS_LINK GL GLU cholmod /usr/lib/libcxsparse.so.2.2.3 ${G2O_LIBRARIES} ${QT_LIBRARIES} ${QT_QTOPENGL_LIBRARY} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS})
+SET(LIBS_LINK GL GLU cholmod /usr/lib/x86_64-linux-gnu/libcxsparse.so.3.1.2 ${G2O_LIBRARIES} ${QT_LIBRARIES} ${QT_QTOPENGL_LIBRARY} ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${OpenCV_LIBS}) 
 #-lboost_signals -lrt -loctomap -loctomap_server -loctomath)
 
 IF (${USE_SIFT_GPU})
