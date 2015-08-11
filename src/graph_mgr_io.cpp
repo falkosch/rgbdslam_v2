@@ -208,11 +208,12 @@ void GraphManager::sendDiffImpl()
     return;
   }
 
-  ROS_WARN("Sending out all clouds since %.2f", lastDiffTS_.toSec());
+  ROS_ERROR("Sending out all clouds since %.2f", lastDiffTS_.toSec());
   batch_processing_runs_ = true;
   ros::Rate r(ParameterServer::instance()->get<double>("send_clouds_rate")); //slow down a bit, to allow for transmitting to and processing in other nodes
   double delay_seconds = ParameterServer::instance()->get<double>("send_clouds_delay");
 	ros::Time last;
+	int count = 0;
   for (graph_it it = graph_.begin(); it != graph_.end(); ++it)
   {
 	
@@ -240,8 +241,10 @@ void GraphManager::sendDiffImpl()
 
     QString message;
     Q_EMIT setGUIInfo(message.sprintf("Sending pointcloud and map transform (%i/%i) on topics %s and /tf", it->first, (int)graph_.size(), ParameterServer::instance()->get<std::string>("individual_cloud_out_topic").c_str()) );
+count++;
     r.sleep();
   }
+	ROS_ERROR("Number of clouds sent with diff_send: %d", count);
   lastDiffTS_ = last;
   batch_processing_runs_ = false;
   Q_EMIT sendFinished();
